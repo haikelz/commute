@@ -1,0 +1,11 @@
+---
+import { TransjakartaHome } from "@/components/transjakarta/transjakarta-home";
+import Layout from "@/layouts/layout.astro";
+---
+
+<Layout
+  title="TransJakarta"
+  description="Rute Bus TransJakarta, detail halte, dan pencarian halte terdekat"
+>
+  <TransjakartaHome client:load />
+</Layout>

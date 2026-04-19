@@ -1,0 +1,11 @@
+---
+import { TransjakartaNearbyPage } from "@/components/transjakarta/transjakarta-nearby-page";
+import Layout from "@/layouts/layout.astro";
+---
+
+<Layout
+  title="Halte Transjakarta Terdekat"
+  description="Cari halte dan bus stop TransJakarta terdekat dari lokasi Anda"
+>
+  <TransjakartaNearbyPage client:load />
+</Layout>

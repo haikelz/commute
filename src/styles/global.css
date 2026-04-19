@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+* {
+  scroll-behavior: smooth;
+}
+
+@keyframes gradient-mesh-a {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(40px, 20px, 0);
+  }
+}
+
+@keyframes gradient-mesh-b {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(-30px, -25px, 0);
+  }
+}
+
+.gradient-mesh-blob-a {
+  animation: gradient-mesh-a 18s ease-in-out infinite;
+  will-change: transform;
+}
+
+.gradient-mesh-blob-b {
+  animation: gradient-mesh-b 22s ease-in-out infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gradient-mesh-blob-a,
+  .gradient-mesh-blob-b {
+    animation: none;
+    will-change: auto;
+  }
+}

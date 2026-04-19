@@ -1,0 +1,147 @@
+---
+import { pwaInfo } from "virtual:pwa-info";
+import "../styles/global.css";
+import { GradientMesh } from "@/components/ui/gradient-mesh";
+
+type Props = {
+  title?: string;
+  description?: string;
+};
+
+const {
+  title = "transit.ekel.dev",
+  description = "A Web Application to show Commuter Line and Transjakarta schedule",
+} = Astro.props;
+
+const path = Astro.url.pathname;
+const tjAuthed = Astro.locals.transjakartaAuthed;
+const tjShowLogout =
+  tjAuthed &&
+  path.startsWith("/transjakarta") &&
+  !path.startsWith("/transjakarta/login");
+---
+
+<!doctype html>
+<html lang="id">
+  <head>
+    <title>{title}</title>
+    <meta charset="UTF-8" />
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={import.meta.env.PUBLIC_SITE_URL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta
+      property="og:image"
+      content="https://transit.ekel.dev/og-image.webp"
+    />
+    <meta property="og:image:alt" content="transit.ekel.dev opengraph image" />
+    <meta
+      property="og:image:type"
+      content="https://transit.ekel.dev/og-image.webp"
+    />
+    <meta
+      property="og:image:secure_url"
+      content="https://transit.ekel.dev/og-image.webp"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={import.meta.env.PUBLIC_SITE_URL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta
+      property="twitter:image"
+      content="https://transit.ekel.dev/og-image.webp"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="sitemap" href="/sitemap.xml" />
+    {
+      pwaInfo?.webManifest.useCredentials && (
+        <link
+          rel="manifest"
+          href={pwaInfo.webManifest.href}
+          crossorigin="use-credentials"
+        />
+      )
+    }
+    {
+      !pwaInfo?.webManifest.useCredentials && (
+        <link
+          rel="manifest"
+          href={pwaInfo?.webManifest.href ?? "/manifest.webmanifest"}
+        />
+      )
+    }
+  </head>
+  <body class="min-h-screen antialiased bg-zinc-950 text-zinc-100">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-zinc-900 focus:px-3 focus:py-2 focus:text-sm focus:text-white"
+      >Lewati ke konten</a
+    >
+    <header
+      class="sticky top-0 z-40 border-b border-white/10 bg-zinc-950/90 backdrop-blur-md"
+    >
+      <div
+        class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8"
+      >
+        <a
+          href="/"
+          class="text-sm font-semibold tracking-tight text-zinc-100 hover:text-white"
+          >Transit</a
+        >
+        <nav class="flex flex-wrap items-center gap-1 text-sm" aria-label="Navigasi">
+          <a
+            href="/"
+            class="rounded-full border border-transparent px-3 py-1.5 text-zinc-400 hover:border-white/10 hover:bg-white/5 hover:text-zinc-200"
+            >KRL</a
+          >
+          <a
+            href="/transjakarta"
+            class="rounded-full border border-transparent px-3 py-1.5 text-zinc-400 hover:border-white/10 hover:bg-white/5 hover:text-zinc-200"
+            >TransJakarta</a
+          >
+          {
+            tjShowLogout && (
+              <button
+                type="button"
+                id="tj-nav-logout"
+                class="rounded-full border border-transparent px-3 py-1.5 text-zinc-500 hover:border-white/10 hover:bg-white/5 hover:text-zinc-300"
+              >
+               Logout 
+              </button>
+            )
+          }
+        </nav>
+        {
+          tjShowLogout && (
+            <script is:inline>
+              (function () {
+                var btn = document.getElementById("tj-nav-logout");
+                if (!btn) return;
+                btn.addEventListener("click", function () {
+                  fetch("/api/transjakarta/auth/logout", { method: "POST" })
+                    .then(function () {
+                      window.location.href = "/";
+                    })
+                    .catch(function () {
+                      window.location.href = "/";
+                    });
+                });
+              })();
+            </script>
+          )
+        }
+      </div>
+    </header>
+    <main id="main">
+      <div class="relative min-h-[calc(100vh-3.5rem)] overflow-hidden">
+        <GradientMesh />
+        <slot />
+      </div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+---
+import { KrlRoot } from "@/components/krl/krl-root";
+import Layout from "@/layouts/layout.astro";
+---
+
+<Layout
+  title="Jadwal KRL"
+  description="Cari jadwal keberangkatan Commuter Line per stasiun"
+>
+  <KrlRoot client:load />
+</Layout>

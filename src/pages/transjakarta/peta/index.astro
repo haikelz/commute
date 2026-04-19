@@ -1,0 +1,11 @@
+---
+import { TransjakartaLiveMapPage } from "@/components/transjakarta/transjakarta-live-map-page";
+import Layout from "@/layouts/layout.astro";
+---
+
+<Layout
+  title="Peta Armada Transjakarta"
+  description="Temukan persebaran armada Transjakarta"
+>
+  <TransjakartaLiveMapPage client:load />
+</Layout>

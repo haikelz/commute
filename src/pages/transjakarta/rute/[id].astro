@@ -1,0 +1,20 @@
+---
+import { TransjakartaRouteDetailPage } from "@/components/transjakarta/transjakarta-route-detail-page";
+import Layout from "@/layouts/layout.astro";
+
+const raw = Astro.params.id;
+const id = raw ? decodeURIComponent(raw) : "";
+---
+
+<Layout
+  title={`Rute ${id} Transjakarta`}
+  description={`Detail rute ${id} Transjakarta`}
+>
+  {
+    id ? (
+      <TransjakartaRouteDetailPage client:load id={id} />
+    ) : (
+      <p class="p-8 text-center text-zinc-400">Rute tidak ditemukan.</p>
+    )
+  }
+</Layout>

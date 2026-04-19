@@ -1,0 +1,11 @@
+---
+import { TransjakartaRoutesPage } from "@/components/transjakarta/transjakarta-routes-page";
+import Layout from "@/layouts/layout.astro";
+---
+
+<Layout
+  title="Rute TransJakarta"
+  description="Daftar rute bus TransJakarta dan koridor BRT"
+>
+  <TransjakartaRoutesPage client:load />
+</Layout>
